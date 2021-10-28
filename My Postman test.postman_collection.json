@@ -1,0 +1,130 @@
+{
+	"info": {
+		"_postman_id": "545858fa-c206-4c42-9173-5bf228bd1a57",
+		"name": "My Postman test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Token\",() => {\r",
+							"    pm.response.to.have.jsonBody(\"token\")\r",
+							"})\r",
+							"let token = pm.response.json().token;\r",
+							"pm.collectionVariables.set(\"token\", token)\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"login\":\"str\",\r\n    \"password\":\"str\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://162.55.220.72:5005/login",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5005",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"person\", () => {\r",
+							"     pm.response.to.have.jsonBody(\"person\")\r",
+							"})\r",
+							"\r",
+							"let startSalary =pm.response.json().start_qa_salary;\r",
+							"let salary6 =pm.response.json().qa_salary_after_6_months;\r",
+							"let salary12 =pm.response.json().qa_salary_after_12_months;\r",
+							"let salary18 =pm.response.json().person.u_salary_1_5_year;\r",
+							"\r",
+							"//console.log(salary18)\r",
+							"\r",
+							"pm.test(\"salary after 6 months\", () => {\r",
+							"    pm.expect(salary6).to.eql(startSalary*2);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"salery after 12 months\", () => {\r",
+							"    pm.expect(salary12).to.eql(startSalary*2.9)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"salery after 18 months\", () => {\r",
+							"    pm.expect(salary18).to.eql(startSalary*4)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"age\":\"30\",\r\n    \"salary\":\"1000\",\r\n    \"name\":\"Kate\",\r\n    \"auth_token\":\"{{token}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://162.55.220.72:5005/user_info",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5005",
+					"path": [
+						"user_info"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": ""
+		}
+	]
+}
